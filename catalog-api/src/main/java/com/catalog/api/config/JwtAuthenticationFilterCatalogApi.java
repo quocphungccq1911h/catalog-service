@@ -60,10 +60,6 @@ public class JwtAuthenticationFilterCatalogApi extends OncePerRequestFilter {
             String username = jwtUtil.extractUsername(token);
             List<String> roles = jwtUtil.extractRoles(token);
 
-            // ✅ Đặt log tại đây
-            System.out.println(">>> Authenticated user: " + username);
-            System.out.println(">>> Roles: " + roles);
-
             // 🔑 Không query DB nữa, tạo Authentication trực tiếp từ JWT
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(
