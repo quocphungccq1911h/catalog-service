@@ -25,15 +25,6 @@ public class JwtAuthenticationFilterCatalogApi extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
 
-    // publicPaths có thể lấy từ cấu hình nếu muốn
-    private static final String[] PUBLIC_URLS = new String[]{
-            "/auth/**",
-            "/api/users",        // POST register
-            "/api/users/ping",   // health
-            "/v3/api-docs/**",
-            "/swagger-ui/**"
-    };
-
     public JwtAuthenticationFilterCatalogApi(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
     }
@@ -68,6 +59,11 @@ public class JwtAuthenticationFilterCatalogApi extends OncePerRequestFilter {
 
             String username = jwtUtil.extractUsername(token);
             List<String> roles = jwtUtil.extractRoles(token);
+
+            // ✅ Đặt log tại đây
+            System.out.println(">>> Authenticated user: " + username);
+            System.out.println(">>> Roles: " + roles);
+
             // 🔑 Không query DB nữa, tạo Authentication trực tiếp từ JWT
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(
